@@ -1,0 +1,33 @@
+{
+  "name": "ama-team/pathetic",
+  "description": "A small library that helps in dealing with paths",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Etki",
+      "email": "etki@etki.me"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "AmaTeam\\Pathetic\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "AmaTeam\\Pathetic\\Test\\": "tests/"
+    }
+  },
+  "require": {},
+  "require-dev": {
+    "allure-framework/allure-codeception": "^1.2",
+    "codeception/codeception": "^2.3",
+    "symfony/console": "<= 3.2.8"
+  },
+  "scripts": {
+    "test": "codecept build && codecept run --coverage --coverage-xml --coverage-html --xml"
+  },
+  "config": {
+    "bin-dir": "bin"
+  }
+}

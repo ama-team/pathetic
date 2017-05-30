@@ -1,0 +1,14 @@
+paths:
+  tests: tests/Suite
+  output: tests/Report
+  data: tests/_data
+  support: tests/Support/Codeception
+  envs: tests/_envs
+actor_suffix: Tester
+extensions:
+  enabled:
+    - Codeception\Extension\RunFailed
+coverage:
+  enabled: true
+  include:
+    - src/*
