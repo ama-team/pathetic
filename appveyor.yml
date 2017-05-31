@@ -40,4 +40,5 @@ install:
   - composer install --no-progress --ansi
 
 test_script:
-  - composer -d %PROJECT_DIRECTORY% test
+  - cd %PROJECT_DIRECTORY%
+  - composer test
