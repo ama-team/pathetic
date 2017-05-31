@@ -5,7 +5,7 @@
 [![CircleCI/Master](https://img.shields.io/circleci/project/github/ama-team/pathetic/master.svg?style=flat-square)](https://circleci.com/gh/ama-team/pathetic/tree/master)
 [![Scrutinizer/Master](https://img.shields.io/scrutinizer/g/ama-team/pathetic/master.svg?style=flat-square)](https://scrutinizer-ci.com/g/ama-team/pathetic)
 [![Code Climate](https://img.shields.io/codeclimate/github/ama-team/pathetic.svg?style=flat-square)](https://codeclimate.com/github/ama-team/pathetic)
-[![Coveralls/Master](https://img.shields.io/coveralls/ama-team/pathetic/master.svg?style=flat-square)](https://coveralls.io/github/ama-team/pathetic)
+[![Coveralls/Master](https://img.shields.io/coveralls/ama-team/pathetic/master.svg?style=flat-square)](https://coveralls.io/github/ama-team/pathetic?branch=master)
 
 
 This is simple PHP library consisting just of couple of classes. It is
@@ -101,8 +101,7 @@ echo $path->getSeparator(); # \
 ### Dev branch shield cellar
 
 
-[![Packagist](https://img.shields.io/packagist/v/ama-team/pathetic.svg?style=flat-square)](https://packagist.org/packages/ama-team/pathetic)
 [![AppVeyor/Dev](https://img.shields.io/appveyor/ci/etki/pathetic/dev.svg?style=flat-square)](https://ci.appveyor.com/project/etki/pathetic)
-[![CircleCI/Dev](https://img.shields.io/circleci/project/github/ama-team/pathetic/master.svg?style=flat-square)](https://circleci.com/gh/ama-team/pathetic/tree/dev)
-[![Scrutinizer/Master](https://img.shields.io/scrutinizer/g/ama-team/pathetic/dev.svg?style=flat-square)](https://scrutinizer-ci.com/g/ama-team/pathetic)
-[![Coveralls/Master](https://img.shields.io/coveralls/ama-team/pathetic/master.svg?style=flat-square)](https://coveralls.io/github/ama-team/pathetic?branch=dev)
+[![CircleCI/Dev](https://img.shields.io/circleci/project/github/ama-team/pathetic/dev.svg?style=flat-square)](https://circleci.com/gh/ama-team/pathetic/tree/dev)
+[![Scrutinizer/Dev](https://img.shields.io/scrutinizer/g/ama-team/pathetic/dev.svg?style=flat-square)](https://scrutinizer-ci.com/g/ama-team/pathetic/?branch=dev)
+[![Coveralls/Dev](https://img.shields.io/coveralls/ama-team/pathetic/dev.svg?style=flat-square)](https://coveralls.io/github/ama-team/pathetic?branch=dev)
