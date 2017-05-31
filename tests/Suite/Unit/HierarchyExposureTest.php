@@ -41,6 +41,7 @@ class HierarchyExposureTest extends Test
         $enumeration = iterator_to_array($path->iterator());
         $parents = $path->getParents();
         $this->assertEquals($paths, $enumeration);
+        $this->assertEquals(end($parents), $path->getParent());
         $this->assertEquals(array_slice($paths, 0, sizeof($paths) - 1), $parents);
     }
 }

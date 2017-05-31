@@ -20,6 +20,7 @@ class NormalizationTest extends Test
             ['./node/../leaf', 'leaf',],
             ['node/../../leaf', '../leaf',],
             ['node/////./////leaf', 'node/leaf',],
+            ['node/leaf/..', 'node',],
         ];
     }
 

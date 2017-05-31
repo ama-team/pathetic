@@ -71,12 +71,11 @@ $path->isAbsolute(); # true
 $node = Path::parse('/node');
 $leaf = Path::parse('leaf');
 $other = $node->resolve($leaf); # /node/leaf
-$path->equals($other); # true
 $path->isChildOf($node); # true
-echo (string) $path->getParent(); # /node
-echo (string) $node->getChild('leaf') # /node/leaf
-echo (string) $node->relativize($path); # leaf
 $path->isSiblingOf($other); # true
+$path->equals($other); # true
+echo (string) $path->getParent(); # /node
+echo (string) $node->relativize($path); # leaf
 foreach ($path->iterator() as $entry) {
     echo (string) $entry;
     # /

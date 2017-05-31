@@ -210,7 +210,7 @@ class Path
                 return $carrier;
             }
             if ($segment === '..' && !empty($carrier) && end($carrier) !== '..') {
-                array_shift($carrier);
+                array_pop($carrier);
                 return $carrier;
             }
             $carrier[] = $segment;
