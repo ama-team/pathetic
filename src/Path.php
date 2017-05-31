@@ -459,7 +459,10 @@ class Path
             $counter++;
         }
         /** @var string[] $traversal */
-        $traversal = array_fill(0, $count - $counter, '..');
+        $traversal = [];
+        if ($count - $counter > 0) {
+            $traversal = array_fill(0, $count - $counter, '..');
+        }
         /** @var string[] $slice */
         $slice = array_slice($other->segments, $counter);
         $copy = clone $this;
