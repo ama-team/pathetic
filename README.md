@@ -3,8 +3,7 @@
 [![Packagist](https://img.shields.io/packagist/v/ama-team/pathetic.svg?style=flat-square)](https://packagist.org/packages/ama-team/pathetic)
 [![AppVeyor/Master](https://img.shields.io/appveyor/ci/etki/pathetic/master.svg?style=flat-square)](https://ci.appveyor.com/project/etki/pathetic)
 [![CircleCI/Master](https://img.shields.io/circleci/project/github/ama-team/pathetic/master.svg?style=flat-square)](https://circleci.com/gh/ama-team/pathetic/tree/master)
-[![Scrutinizer/Master](https://img.shields.io/scrutinizer/g/ama-team/pathetic/master.svg?style=flat-square)](https://scrutinizer-ci.com/g/ama-team/pathetic?branch=dev)
-[![Code Climate](https://img.shields.io/codeclimate/github/ama-team/pathetic.svg?style=flat-square)](https://codeclimate.com/github/ama-team/pathetic)
+[![Scrutinizer/Master](https://img.shields.io/scrutinizer/g/ama-team/pathetic/master.svg?style=flat-square)](https://scrutinizer-ci.com/g/ama-team/pathetic?branch=master)
 [![Coveralls/Master](https://img.shields.io/coveralls/ama-team/pathetic/master.svg?style=flat-square)](https://coveralls.io/github/ama-team/pathetic?branch=master)
 
 
