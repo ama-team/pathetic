@@ -3,14 +3,14 @@
 namespace AmaTeam\Pathetic\Test\Suite\Unit;
 
 use AmaTeam\Pathetic\Path;
-use Codeception\Test\Unit;
+use AmaTeam\Pathetic\Test\Support\Test;
 
 /**
  * Oh yeah i like 100% coverage.
  *
  * @author Etki <etki@etki.me>
  */
-class PlatformDetectionTest extends Unit
+class PlatformDetectionTest extends Test
 {
     /**
      * @test

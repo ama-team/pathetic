@@ -3,12 +3,12 @@
 namespace AmaTeam\Pathetic\Test\Suite\Unit;
 
 use AmaTeam\Pathetic\Path;
-use Codeception\Test\Unit;
+use AmaTeam\Pathetic\Test\Support\Test;
 
 /**
  * @author Etki <etki@etki.me>
  */
-class HierarchyDetectionCorrectnessTest extends Unit
+class HierarchyDetectionTest extends Test
 {
     public function dataProvider()
     {
@@ -31,9 +31,9 @@ class HierarchyDetectionCorrectnessTest extends Unit
      *
      * @dataProvider dataProvider
      *
-     * @param $path
-     * @param $other
-     * @param $mask
+     * @param string $path
+     * @param string $other
+     * @param int[] $mask
      */
     public function shouldMatchExpectedHierarchy($path, $other, $mask)
     {

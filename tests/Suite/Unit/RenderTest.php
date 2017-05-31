@@ -3,12 +3,12 @@
 namespace AmaTeam\Pathetic\Test\Suite\Unit;
 
 use AmaTeam\Pathetic\Path;
-use Codeception\Test\Unit;
+use AmaTeam\Pathetic\Test\Support\Test;
 
 /**
  * @author Etki <etki@etki.me>
  */
-class RenderCorrectnessTest extends Unit
+class RenderTest extends Test
 {
     public function dataProvider()
     {
@@ -37,6 +37,11 @@ class RenderCorrectnessTest extends Unit
      * @test
      *
      * @dataProvider dataProvider
+     *
+     * @param string $input
+     * @param string $platform
+     * @param string $asString
+     * @param string $asPlatformString
      */
     public function shouldRenderExactlyAsExpected(
         $input,

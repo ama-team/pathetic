@@ -4,18 +4,19 @@ namespace AmaTeam\Pathetic\Test\Suite\Unit;
 
 use AmaTeam\Pathetic\Path;
 use AmaTeam\Pathetic\Test\Support\StringContainer;
-use Codeception\Test\Unit;
+use AmaTeam\Pathetic\Test\Support\Test;
 
 /**
  * @author Etki <etki@etki.me>
  */
-class GenericApiCorrectnessTest extends Unit
+class GenericApiTest extends Test
 {
     /**
      * @test
      */
-    public function shouldAllowSchemeChange()
+    public function shouldAllowSchemeChanges()
     {
+        /** @var Path $path */
         $path = Path::parse('node');
         $this->assertNull($path->getScheme());
         $scheme = 'file';
@@ -23,6 +24,21 @@ class GenericApiCorrectnessTest extends Unit
         $this->assertEquals($scheme, $path->getScheme());
         $path = $path->withoutScheme();
         $this->assertNull($path->getScheme());
+    }
+
+    /**
+     * @test
+     */
+    public function shouldAllowRootChanges()
+    {
+        /** @var Path $path */
+        $path = Path::parse('node', Path::PLATFORM_WINDOWS);
+        $this->assertNull($path->getRoot());
+        $root = 'c:';
+        $path = $path->withRoot($root);
+        $this->assertEquals($root, $path->getRoot());
+        $path = $path->withoutRoot();
+        $this->assertNull($path->getRoot());
     }
 
     /**

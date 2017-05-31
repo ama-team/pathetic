@@ -3,12 +3,12 @@
 namespace AmaTeam\Pathetic\Test\Suite\Unit;
 
 use AmaTeam\Pathetic\Path;
-use Codeception\Test\Unit;
+use AmaTeam\Pathetic\Test\Support\Test;
 
 /**
  * @author Etki <etki@etki.me>
  */
-class ResolutionTest extends Unit
+class ResolutionTest extends Test
 {
     public function resolutionDataProvider()
     {

@@ -18,14 +18,19 @@
       "AmaTeam\\Pathetic\\Test\\": "tests/"
     }
   },
-  "require": {},
+  "require": {
+    "php": ">= 5.4"
+  },
   "require-dev": {
     "allure-framework/allure-codeception": "^1.2",
     "codeception/codeception": "^2.3",
-    "symfony/console": "<= 3.2.8"
+    "symfony/console": "<= 3.2.8",
+    "satooshi/php-coveralls": "^1.0"
   },
   "scripts": {
-    "test": "codecept build && codecept run --coverage --coverage-xml --coverage-html --xml"
+    "test": "codecept build && codecept run --coverage --coverage-xml --coverage-html --xml",
+    "test:report": "allure generate -o tests/Report/Allure tests/Metadata/Allure",
+    "test:report:publish": "coveralls"
   },
   "config": {
     "bin-dir": "bin"

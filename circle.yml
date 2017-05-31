@@ -1,0 +1,20 @@
+machine:
+  timezone: UTC
+  post:
+    - sudo apt-add-repository ppa:yandex-qatools/allure-framework -y
+    - sudo apt-get update -yq
+    - sudo apt-get install allure-commandline -yq
+    - 'echo "date.timezone = UTC" >> /opt/circleci/php/$(phpenv global)/etc/php.ini'
+dependencies:
+  override:
+    - composer install --no-interaction --no-progress:
+test:
+  override:
+    - composer test
+  post:
+    - composer test:report
+    # in case tag is pushed, coveralls will try to find current branch and will end on master
+    - '[ -z "$CIRCLE_BRANCH" ] || composer test:report:publish'
+    - mkdir -p $CIRCLE_TEST_REPORTS/junit
+    - cp tests/Report/report.xml $CIRCLE_TEST_REPORTS/junit/junit.xml
+    - cp -r tests/Report/* $CIRCLE_ARTIFACTS/

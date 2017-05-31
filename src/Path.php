@@ -69,13 +69,23 @@ class Path
         $this->separator = $separator;
     }
 
+    /**
+     * Parses provided path into {@link Path} instance, acting as a public
+     * constructor for whole Path class.
+     *
+     * @param string $input Path to be parsed
+     * @param string|null $platform Platform used to determine correct
+     * algorithm. If omitted/set to null, will be detected automatically.
+     *
+     * @return Path
+     */
     public static function parse($input, $platform = null)
     {
         $platform = $platform ?: static::detectPlatform();
         $separator = $platform === static::PLATFORM_UNIX ? '/' : '\\';
         $scheme = static::extractScheme($input);
         $scheme = empty($scheme) ? null : $scheme;
-        $path = static::stripScheme($input);
+        $path = static::stripScheme($input, $scheme);
         if ($platform === static::PLATFORM_WINDOWS) {
             $path = str_replace('\\', '/', $path);
         }
@@ -97,13 +107,9 @@ class Path
         return substr($input, 0, $position);
     }
 
-    protected static function stripScheme($input)
+    protected static function stripScheme($input, $scheme)
     {
-        $position = strpos($input, '://');
-        if ($position === false) {
-            return $input;
-        }
-        return substr($input, $position + 3);
+        return empty($scheme) ? $input : substr($input, strlen($scheme) + 3);
     }
 
     protected static function containsRoot(array $segments, $platform)
@@ -153,7 +159,7 @@ class Path
      * Converts input into path. Throws runtime exception if that's not
      * possible.
      *
-     * @param Path|string|object $input
+     * @param Path|string $input
      * @return Path|null
      */
     protected function tryAdapt($input)
@@ -173,7 +179,7 @@ class Path
      * Converts input into path. Throws runtime exception if that's not
      * possible.
      *
-     * @param Path|string|object $input
+     * @param Path|string $input
      * @return Path
      */
     protected function adapt($input)
@@ -194,6 +200,11 @@ class Path
      */
     public function normalize()
     {
+        /**
+         * @param string[] $carrier
+         * @param string $segment
+         * @return string[]
+         */
         $reducer = function ($carrier, $segment) {
             if ($segment === '' || $segment === '.') {
                 return $carrier;
@@ -236,7 +247,7 @@ class Path
      * Returns iterator that will iterate hierarchy branch according to
      * {@link #enumerate} rules.
      *
-     * @return Iterator<Path>
+     * @return Iterator Iterator that emits Path instances.
      */
     public function iterator()
     {
@@ -287,7 +298,7 @@ class Path
      * If path schemes differ, or not both paths are relative/absolute, this
      * method will instantly return false.
      *
-     * @param Path|string|object $other
+     * @param Path|string $other
      * @return bool
      */
     public function isDescendantOf($other)
@@ -303,7 +314,8 @@ class Path
         if (sizeof($current->segments) <= sizeof($other->segments)) {
             return false;
         }
-        for ($i = 0; $i < sizeof($other->segments); $i++) {
+        $limit = sizeof($other->segments);
+        for ($i = 0; $i < $limit; $i++) {
             if ($other->segments[$i] !== $current->segments[$i]) {
                 return false;
             }
@@ -318,7 +330,7 @@ class Path
      * If path schemes differ, or not both paths are relative/absolute, this
      * method will instantly return false.
      *
-     * @param Path|string|object $other
+     * @param Path|string $other
      * @return bool
      */
     public function isAncestorOf($other)
@@ -332,7 +344,7 @@ class Path
      * If path schemes differ, or not both paths are relative/absolute, this
      * method will instantly return false.
      *
-     * @param $other
+     * @param Path|string $other
      * @return bool
      */
     public function isChildOf($other)
@@ -351,7 +363,7 @@ class Path
      * If path schemes differ, or not both paths are relative/absolute, this
      * method will instantly return false.
      *
-     * @param $other
+     * @param Path|string $other
      * @return bool
      */
     public function isParentOf($other)
@@ -365,7 +377,7 @@ class Path
      * If path schemes differ, or not both paths are relative/absolute, this
      * method will instantly return false.
      *
-     * @param $other
+     * @param Path|string $other
      * @return bool
      */
     public function isSiblingOf($other)
@@ -402,12 +414,13 @@ class Path
      * /a/b resolve c/d => /a/b/c/d
      * a/b resolve c/d => a/b/c/d
      *
-     * @param Path|string|object $other
+     * @param Path|string $other
      *
      * @return Path
      */
     public function resolve($other)
     {
+        $other = $this->adapt($other);
         if ($other->isAbsolute()) {
             return $other;
         }
@@ -422,19 +435,21 @@ class Path
      * provided one). If called with an absolute path against relative or vice
      * versa, will return other path as is.
      *
-     * @param Path|string|object $other
+     * @param Path|string $other
      *
      * @return Path
      */
     public function relativize($other)
     {
+        $other = $this->adapt($other);
         if ($other->root !== $this->root) {
             return $other;
         }
         $current = $this->normalize();
         $other = $other->normalize();
         $counter = 0;
-        for ($i = 0; $i < sizeof($current->segments); $i++) {
+        $count = sizeof($current->segments);
+        for ($i = 0; $i < $count; $i++) {
             if (!isset($other->segments[$i])) {
                 break;
             }
@@ -443,10 +458,13 @@ class Path
             }
             $counter++;
         }
-        $traversal = array_fill(0, sizeof($current->segments) - $counter, '..');
+        /** @var string[] $traversal */
+        $traversal = array_fill(0, $count - $counter, '..');
+        /** @var string[] $slice */
         $slice = array_slice($other->segments, $counter);
         $copy = clone $this;
         $copy->root = null;
+        /** @var string[] segments */
         $copy->segments = array_merge($traversal, $slice);
         return $copy;
     }
@@ -454,7 +472,7 @@ class Path
     /**
      * Lexicographically compares one path to another.
      *
-     * @param Path|string|object $other
+     * @param Path|string $other
      * @return int
      */
     public function compareTo($other)
@@ -508,7 +526,7 @@ class Path
     /**
      * Compares current path to provided one and tells if they are equal.
      *
-     * @param Path|string|object|null $other
+     * @param Path|string|null $other
      * @return bool
      */
     public function equals($other)
@@ -565,6 +583,25 @@ class Path
     public function withoutScheme()
     {
         return $this->withScheme(null);
+    }
+
+    /**
+     * @param string $root
+     * @return Path
+     */
+    public function withRoot($root)
+    {
+        $copy = clone $this;
+        $copy->root = $root;
+        return $copy;
+    }
+
+    /**
+     * @return Path
+     */
+    public function withoutRoot()
+    {
+        return $this->withRoot(null);
     }
 
     /**

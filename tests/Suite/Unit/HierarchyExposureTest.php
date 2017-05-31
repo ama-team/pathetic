@@ -3,12 +3,12 @@
 namespace AmaTeam\Pathetic\Test\Suite\Unit;
 
 use AmaTeam\Pathetic\Path;
-use Codeception\Test\Unit;
+use AmaTeam\Pathetic\Test\Support\Test;
 
 /**
  * @author Etki <etki@etki.me>
  */
-class HierarchyExposureCorrectnessTest extends Unit
+class HierarchyExposureTest extends Test
 {
     public function dataProvider()
     {

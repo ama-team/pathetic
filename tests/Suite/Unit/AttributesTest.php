@@ -3,12 +3,12 @@
 namespace AmaTeam\Pathetic\Test\Suite\Unit;
 
 use AmaTeam\Pathetic\Path;
-use Codeception\Test\Unit;
+use AmaTeam\Pathetic\Test\Support\Test;
 
 /**
  * @author Etki <etki@etki.me>
  */
-class AttributesCorrectnessTest extends Unit
+class AttributesTest extends Test
 {
     public function dataProvider()
     {
@@ -33,9 +33,9 @@ class AttributesCorrectnessTest extends Unit
      *
      * @dataProvider dataProvider
      *
-     * @param $input
-     * @param $platform
-     * @param $mask
+     * @param string $input
+     * @param string $platform
+     * @param int[] $mask
      */
     public function shouldHaveExpectedAttributes($input, $platform, $mask)
     {
