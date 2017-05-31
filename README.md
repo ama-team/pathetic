@@ -3,15 +3,15 @@
 [![Packagist](https://img.shields.io/packagist/v/ama-team/pathetic.svg?style=flat-square)](https://packagist.org/packages/ama-team/pathetic)
 [![AppVeyor/Master](https://img.shields.io/appveyor/ci/etki/pathetic/master.svg?style=flat-square)](https://ci.appveyor.com/project/etki/pathetic)
 [![CircleCI/Master](https://img.shields.io/circleci/project/github/ama-team/pathetic/master.svg?style=flat-square)](https://circleci.com/gh/ama-team/pathetic/tree/master)
-[![Scrutinizer/Master](https://img.shields.io/scrutinizer/g/ama-team/pathetic/master.svg?style=flat-square)](https://scrutinizer-ci.com/g/ama-team/pathetic)
+[![Scrutinizer/Master](https://img.shields.io/scrutinizer/g/ama-team/pathetic/master.svg?style=flat-square)](https://scrutinizer-ci.com/g/ama-team/pathetic?branch=dev)
 [![Code Climate](https://img.shields.io/codeclimate/github/ama-team/pathetic.svg?style=flat-square)](https://codeclimate.com/github/ama-team/pathetic)
 [![Coveralls/Master](https://img.shields.io/coveralls/ama-team/pathetic/master.svg?style=flat-square)](https://coveralls.io/github/ama-team/pathetic?branch=master)
 
 
-This is simple PHP library consisting just of couple of classes. It is
-aimed to help with platform-independent path work, so you can run the 
-same code, fnmatch checks and comparisons regardless of specific 
-machine your code is running on.
+Pathetic is a simple PHP library consisting just of couple of classes. 
+It is aimed to help with platform-independent path work, so you can 
+run the same code, fnmatch checks and comparisons regardless of 
+specific machine your project is running on.
 
 And yes, it is influenced by `java.nio.Path`.
 
@@ -23,8 +23,7 @@ composer require ama-team/pathetic
 
 ## Usage
 
-Everything whirls around `Path` class that is usually created via 
-`Path::parse()` call:
+You start with classic string and `Path::parse` method:
 
 ```php
 use AmaTeam\Pathetic\Path;
@@ -60,8 +59,9 @@ If you ever to need platform-consistent representation, you may use
 echo $path->toPlatformString(); // file://beverages\\soda
 ```
 
-Except for those basic operations, Pathetic allows basic path normalization,
-path concatenation, path relativization and path comparing.
+Except for those basic operations, Pathetic allows basic path 
+normalization, path concatenation (resolution), path relativization 
+and path comparison.
 
 ```php
 $path = Path::parse('/node/directory//./../leaf');
@@ -86,20 +86,37 @@ foreach ($path->iterator() as $entry) {
 }
 ```
 
-There are some edge cases, of course. When path is rendered down, it
-may be completely empty.
-
 At last, there are some helper methods you may want to use:
 
 ```php
 $path = Path::parse('file://c:/node/directory', Path::PLATFORM_WINDOWS);
-$path = $path->withoutScheme();
-echo $path->getRoot(); # empty string
+$path = $path->withoutScheme()->withRoot('d:');
+echo $path->getRoot(); # d:
+echo $path->getScheme(); # empty string
 echo $path->getSeparator(); # \
 ```
 
-### Dev branch shield cellar
+### Major notes
 
+All path operations are non-destructive, and all path instances are
+immutable - whenever `#normalize()`, `#relativize()` or `#withRoot()`
+are called, new object is created instead of modifying old one.
+
+There is edge case with current directory - while one may expect
+that normalized relative path of current directory will render down
+to dot (`'.'`), this won't happen - it will be rendered to empty string
+(`''`). However, while you don't call for normalization, your path will 
+stay as-is.
+
+Windows has two types of absolute paths - with and without drive 
+letter, (`\Users` and `C:\Users`, for example). Both types are 
+treated as absolute by Pathetic - it's up to end user to determine if
+he or she has to specify drive letter to not to inherit it from current
+working directory. This is, of course, a drawback, but unless that 
+absolute path is inherited from user input - which should be 
+intentional thing - that shouldn't happen.
+
+### Dev branch shield cellar
 
 [![AppVeyor/Dev](https://img.shields.io/appveyor/ci/etki/pathetic/dev.svg?style=flat-square)](https://ci.appveyor.com/project/etki/pathetic)
 [![CircleCI/Dev](https://img.shields.io/circleci/project/github/ama-team/pathetic/dev.svg?style=flat-square)](https://circleci.com/gh/ama-team/pathetic/tree/dev)
