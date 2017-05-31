@@ -159,7 +159,7 @@ class Path
      * Converts input into path. Throws runtime exception if that's not
      * possible.
      *
-     * @param Path|string $input
+     * @param Path|string|mixed $input
      * @return Path|null
      */
     protected function tryAdapt($input)
