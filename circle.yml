@@ -1,7 +1,7 @@
 machine:
   timezone: UTC
   php:
-    version: 5.4.5
+    version: 5.5.31
   post:
     - sudo apt-add-repository ppa:yandex-qatools/allure-framework -y
     - sudo apt-get update -yq
