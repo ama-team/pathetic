@@ -217,13 +217,15 @@ class Path
             return $carrier;
         };
         $copy = clone $this;
-        $copy->segments = array_reduce($this->segments, $reducer, []);
+        /** @var string[] $segments */
+        $segments = array_reduce($this->segments, $reducer, []);
+        $copy->segments = $segments;
         return $copy;
     }
 
     /**
      * Returns hierarchy branch from the topmost node (root, if present) down
-     * to current node, so `/a/b/c` will result in `/a`, `/a/b` and `/a/b/c`,
+     * to current node, so `/a/b/c` will result in `/a`, `  /a/b` and `/a/b/c`,
      * and `a/b` in `a` and `a/b`.
      *
      * @return Path[]
@@ -465,17 +467,18 @@ class Path
         }
         /** @var string[] $slice */
         $slice = array_slice($other->segments, $counter);
+        /** @var string[] $segments */
+        $segments = array_merge($traversal, $slice);
         $copy = clone $this;
         $copy->root = null;
-        /** @var string[] segments */
-        $copy->segments = array_merge($traversal, $slice);
+        $copy->segments = $segments;
         return $copy;
     }
 
     /**
      * Lexicographically compares one path to another.
      *
-     * @param Path|string $other
+     * @param Path|string|null $other
      * @return int
      */
     public function compareTo($other)
