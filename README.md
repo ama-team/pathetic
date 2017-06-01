@@ -90,8 +90,8 @@ At last, there are some helper methods you may want to use:
 $path = Path::parse('file://c:/node/directory', Path::PLATFORM_WINDOWS);
 $path = $path->withoutScheme()->withRoot('d:');
 echo $path->getRoot(); # d:
-echo $path->getScheme(); # empty string
-echo $path->getSeparator(); # \
+echo $path->getScheme(); # null
+echo $path->getSeparator(); # \ - because of windows platform
 ```
 
 ### Major notes
